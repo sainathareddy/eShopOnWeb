@@ -1,0 +1,20 @@
+---
+on:
+    pull_request:
+        branches:
+        - main
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v5
+        - name: restore
+          run: dotnet restore src/Web/Web.csproj
+        - name: build
+          run:  dotnet build --configuration=Release  src/Web/Web.csproj --no-restore
+        - name: test
+          run: dotnet test src/Web/Web.csproj
+        - name: publish
+          run: dotnet publish --configuration Release src/Web/Web.csproj --output published
