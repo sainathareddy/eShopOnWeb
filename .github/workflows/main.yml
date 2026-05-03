@@ -26,9 +26,6 @@ jobs:
         - name: publish
           run: dotnet publish --configuration Release src/Web/Web.csproj --output published
 
-        - name: publish
-          run: dotnet publish --configuration Release src/Web/Web.csproj --output published
-
         # 1. పబ్లిష్ అయిన ఫైల్స్‌ను జిప్ చేయడం
         - name: Zip the published artifact
           # ఇక్కడ మనం రిపోజిటరీ పేరు మరియు రన్ నంబర్‌తో జిప్ ఫైల్‌ను క్రియేట్ చేస్తున్నాము
