@@ -13,8 +13,15 @@ jobs:
         - name: restore
           run: dotnet restore src/Web/Web.csproj
         - name: build
-          run:  dotnet build --configuration=Release  src/Web/Web.csproj --no-restore
+          run:  Ldotnet build --configuration=Release  src/Web/Web.csproj --no-restore
         - name: test
-          run: dotnet test src/Web/Web.csproj
+          run: Ldotnet test src/Web/Web.csproj --logger "trx;LogFileName=test_results.trx"
+        # 2. ఆ రిజల్ట్ ఫైల్‌ను GitHub Artifacts కి పబ్లిష్ చేసే స్టెప్
+        - name: Publish Test Results
+          uses: actions/upload-artifact@v4
+          if: always() # టెస్ట్ ఫెయిల్ అయినా కూడా రిజల్ట్స్ పబ్లిష్ అవ్వాలి కాబట్టి ఇది ముఖ్యం
+          with:
+            name: dotnet-test-results
+            path: "**/TestResults/*.trx"          
         - name: publish
           run: dotnet publish --configuration Release src/Web/Web.csproj --output published
